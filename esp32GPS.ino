@@ -190,6 +190,9 @@ void loop(){
     Serial.println(" °C");
     Serial.println();
     Serial.println();
+
+    dhtStartTime = millis();
+
   }
 
   // -------------------------------------------------------------
