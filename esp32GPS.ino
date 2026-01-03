@@ -63,6 +63,7 @@ GeoLinker geo;
 bool gpsFixAcquired = false;
 uint32_t gpsStartTime = 0;
 
+uint32_t dhtStartTime = 0;
 
 struct GPS_Coordinates {
   double latitude;
@@ -118,6 +119,7 @@ void setup(){
   delay(1000);
 
   dht.begin();
+  dhtStartTime = millis();
 
   pinMode(2,OUTPUT);
 
@@ -165,6 +167,30 @@ void setup(){
 // ===============================================================
 void loop(){
   uint8_t status = geo.loop();
+
+  // Read humidity and temperature data
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  // Error handling if sensor fails to provide data
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Error: Unable to read data from DHT sensor.");
+    return;
+  }
+
+  // Print temperature results to the serial monitor
+  if(millis()-dhtStartTime> 60000){
+    Serial.println();
+    Serial.println();
+    Serial.print("Humidity: ");
+    Serial.print(humidity);
+    Serial.print(" %\t");
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.println(" °C");
+    Serial.println();
+    Serial.println();
+  }
 
   // -------------------------------------------------------------
   // GPS FIX HANDLING
@@ -245,7 +271,7 @@ void loop(){
       }
 }
 
-  delay(100);
+  
 }
 
 
