@@ -179,7 +179,7 @@ void loop(){
   }
 
   // Print temperature results to the serial monitor
-  if(millis()-dhtStartTime> 60000){
+  if(millis()-dhtStartTime > 60000){
     Serial.println();
     Serial.println();
     Serial.print("Humidity: ");
