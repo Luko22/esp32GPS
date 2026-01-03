@@ -15,6 +15,7 @@
  */
 
 #include <GeoLinker.h>
+#include "DHT.h"
 #include "credentials.h"
 
 // ===============================================================
@@ -25,6 +26,12 @@ HardwareSerial gpsSerial(1);   // UART1 for GPS
 #define GPS_RX 16              // ESP32 RX ← GPS TX
 #define GPS_TX 17              // ESP32 TX → GPS RX (optional)
 #define GPS_BAUD 9600
+
+// Pin configuration and sensor type
+#define DHTPIN 4        // GPIO pin connected to DHT22
+#define DHTTYPE DHT22   // Specify DHT22 sensor
+
+DHT dht(DHTPIN, DHTTYPE);
 
 // ===============================================================
 // NETWORK CONFIGURATION (WiFi)
@@ -109,6 +116,8 @@ GPS_Coordinates parseGPRMC(String nmea) {
 void setup(){
   Serial.begin(115200);
   delay(1000);
+
+  dht.begin();
 
   pinMode(2,OUTPUT);
 
@@ -242,19 +251,19 @@ void loop(){
 
 void signal(){
   digitalWrite(2, HIGH);
-        delay(200);
+        delay(50);
         digitalWrite(2, LOW);
-        delay(200);
+        delay(50);
         digitalWrite(2, HIGH);
-        delay(200);
+        delay(50);
         digitalWrite(2, LOW);
-        delay(200);
+        delay(50);
         digitalWrite(2, HIGH);
-        delay(200);
+        delay(50);
         digitalWrite(2, LOW);
-        delay(200);
+        delay(50);
         digitalWrite(2, HIGH);
-        delay(200);
+        delay(50);
         digitalWrite(2, LOW);
-        delay(200);
+        delay(50);
 }
