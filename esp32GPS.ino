@@ -14,6 +14,9 @@
  * ===============================================================
  */
 
+ //my personal goal is to make multiple circuits and create a network of with cool visuals and maps
+ //Which I could then use for a 3d website for my personal portfolio
+
 #include <GeoLinker.h>
 #include "DHT.h"
 #include "credentials.h"
