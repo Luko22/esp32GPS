@@ -36,17 +36,18 @@ HardwareSerial gpsSerial(1);   // UART1 for GPS
 
 DHT dht(DHTPIN, DHTTYPE);
 
+#define LEDPIN 15
 // ===============================================================
 // NETWORK CONFIGURATION (WiFi)
 // ===============================================================
-const char* ssid     = mySSIDLuanda;
-const char* password = myPASSWORDLuanda;
+const char* ssid     = mySSID;
+const char* password = myPASSWORD;
 
 // ===============================================================
 // GEOLINKER CONFIGURATION
 // ===============================================================
 const char* apiKey   = myGPSAPIKey;
-const char* deviceID = "espLuandaNeo7M";
+const char* deviceID = "espKleveNeo7M";
 
 const uint16_t updateInterval = 10;   // seconds
 const bool enableOfflineStorage = true;
@@ -124,7 +125,7 @@ void setup(){
   dht.begin();
   dhtStartTime = millis();
 
-  pinMode(2,OUTPUT);
+  pinMode(LEDPIN,OUTPUT);
 
   Serial.println("\n=== GeoLinker GPS Tracker (NEO-7M) ===");
 
@@ -212,7 +213,7 @@ void loop(){
       if (millis() - lastMsg > 10000) {
         Serial.println("⏳ GPS has no fix yet (RMC status = V)");
         lastMsg = millis();
-        signal();
+        signal(LEDPIN);
       }
     }
     else if (millis() - gpsStartTime > 300000) { // 5 minutes
@@ -233,22 +234,22 @@ void loop(){
     switch (status) {
       case STATUS_SENT:
         Serial.println("Data sent successfully");
-        digitalWrite(2, HIGH);
+        digitalWrite(LEDPIN, HIGH);
         break;
 
       case STATUS_NETWORK_ERROR:
         Serial.println("Network error (buffering offline)");
-        signal();
+        signal(LEDPIN);
         break;
 
       case STATUS_BAD_REQUEST_ERROR:
         Serial.println("Bad request (check API key)");
-        signal();
+        signal(LEDPIN);
         break;
 
       case STATUS_INTERNAL_SERVER_ERROR:
         Serial.println("Server error");
-        signal();
+        signal(LEDPIN);
         break;
 
       default:
@@ -281,21 +282,21 @@ void loop(){
 }
 
 
-void signal(){
-  digitalWrite(2, HIGH);
+void signal(int pin){
+  digitalWrite(pin, HIGH);
         delay(50);
-        digitalWrite(2, LOW);
+        digitalWrite(pin, LOW);
         delay(50);
-        digitalWrite(2, HIGH);
+        digitalWrite(pin, HIGH);
         delay(50);
-        digitalWrite(2, LOW);
+        digitalWrite(pin, LOW);
         delay(50);
-        digitalWrite(2, HIGH);
+        digitalWrite(pin, HIGH);
         delay(50);
-        digitalWrite(2, LOW);
+        digitalWrite(pin, LOW);
         delay(50);
-        digitalWrite(2, HIGH);
+        digitalWrite(pin, HIGH);
         delay(50);
-        digitalWrite(2, LOW);
+        digitalWrite(pin, LOW);
         delay(50);
 }
