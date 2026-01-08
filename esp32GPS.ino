@@ -159,6 +159,8 @@ void setup(){
     Serial.println("✓ WiFi connected");
   }
 
+  ///first temp and hum
+  
   // ---- GPS Warm-up ----
   gpsStartTime = millis();
   Serial.println("\nWaiting for GPS fix...");
@@ -183,7 +185,7 @@ void loop(){
   }
 
   // Print temperature results to the serial monitor
-  if(millis()-dhtStartTime > 60000){
+  if(millis()-dhtStartTime > 30000){
     Serial.println();
     Serial.println();
     Serial.print("Humidity: ");
