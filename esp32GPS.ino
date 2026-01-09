@@ -18,6 +18,7 @@
  //Which I could then use for a 3d website for my personal portfolio
 
 #include <GeoLinker.h>
+#include <WiFi.h>
 #include "DHT.h"
 #include "credentials.h"
 
@@ -48,6 +49,15 @@ const char* password = myPASSWORD;
 // ===============================================================
 const char* apiKey   = myGPSAPIKey;
 const char* deviceID = "espKleveNeo7M";
+
+// =================================================
+//MQTT
+// =================================================
+const char* mqtt_server = "192.168.107.93"; // <-- Pi’s LAN IP
+const int mqtt_port = 1883;
+const char* mqtt_topic = "iot/espKleveNeo7M/telemetry";
+
+
 
 const uint16_t updateInterval = 10;   // seconds
 const bool enableOfflineStorage = true;
